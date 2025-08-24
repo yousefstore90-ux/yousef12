@@ -1,220 +1,242 @@
-<!-- Copyright (C) 2023-2025 anonymous
-
-This file is part of PSFree.
-
-PSFree is free software: you can redistribute it and/or modify
-it under the terms of the GNU Affero General Public License as
-published by the Free Software Foundation, either version 3 of the
-License, or (at your option) any later version.
-
-PSFree is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU Affero General Public License for more details.
-
-You should have received a copy of the GNU Affero General Public License
-along with this program.  If not, see <https://www.gnu.org/licenses/>.
--->
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <title>PSFree v1.5.0 - PS4/PS5 Exploit</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="css/styles.css">
-        <style>
-            @font-face {
-                font-family: 'Liberation Mono';
-                src: url('fonts/LiberationMono-Regular.ttf');
-            }
-        </style>
-    </head>
-    <body>
-        <div class="container">
-            <div class="header">
-                <h1>Yousef_Store v1.5.0</h1>
-                <p>PS4/PS5 Exploit Chain</p>
-            </div>
-
-            <div class="card">
-                <h2 class="card-title">Status</h2>
-                <div id="status-container">
-                    <p><span class="status-indicator status-running" id="status-icon"></span> <span id="status-text">Running exploit...</span></p>
-                    <div class="progress-container">
-                        <div class="progress-bar" id="progress-bar"></div>
-                    </div>
-                </div>
-                <!-- Run exploit and reset buttons removed -->
-            </div>
-
-            <div class="tabs">
-                <div class="tab active" data-tab="console">Console</div>
-                <!-- Payloads and settings tabs removed -->
-            </div>
-
-            <div class="tab-content active" id="tab-console">
-                <pre id="console"></pre>
-            </div>
-
-            <!-- Payloads and settings tabs removed -->
-
-            <!-- Info content moved below console -->
-    
-                    
-                
-        
-
-        <script src="js/remote-logger.js"></script>
-        <script src="js/payload-manager.js"></script>
-        <script src="js/ui.js"></script>
-        <script src="payload.js"></script>
-        <script>
-            // Initialize Remote Logger
-            document.addEventListener('DOMContentLoaded', function() {
-                // Try to get server IP from URL parameter
-                const urlParams = new URLSearchParams(window.location.search);
-                const serverIp = urlParams.get('server');
-
-                // Logger configuration
-                const loggerConfig = {
-                    enabled: true,
-                    localConsole: true
-                };
-
-                // If a server parameter is present, use it
-                if (serverIp) {
-                    loggerConfig.serverUrl = `http://${serverIp}:3000`;
-                }
-
-                // Initialize logger
-                window.RemoteLogger.init(loggerConfig);
-
-                // Log browser info
-                window.RemoteLogger.info('PSFree initialized', {
-                    userAgent: navigator.userAgent,
-                    url: window.location.href,
-                    timestamp: new Date().toISOString()
-                });
-            });
-        </script>
-        <script type="module" src="./alert.mjs"></script>
-    </body>
-</html>
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Yousef Store — صفحة ترحيبية</title>
-  <!-- ملاحظة مهمة: احفظ هذه الصفحة باسم index.html وضع صورة الخلفية باسم bg.jpg في نفس المجلد. -->
+  <meta charset="utf-8">
+  <title>Yousef Store v1.5.0 - PS4/PS5 Exploit</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    :root{
-      --bg1:#0e131a; --bg2:#101926; --txt:#eaf3ff;
-      --accent:#3bb4ff; --accent2:#00e5ff; --shadow:rgba(0,0,0,.45);
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      font-family: "Segoe UI", Tahoma, sans-serif;
+      color: #eaf3ff;
+      background: linear-gradient(135deg, #0e131a, #101926);
     }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{margin:0; font-family: "Segoe UI", Tahoma, system-ui, -apple-system, "Cairo", sans-serif; color:var(--txt); background:var(--bg1);}
-
-    /* مقطع بملء الشاشة */
-    .hero{position:relative; min-height:100vh; display:grid; place-items:center; overflow:hidden;}
-    /* الخلفية: تعمل حتى بدون الصورة بفضل التدرج */
-    .hero::before{
-      content:""; position:absolute; inset:0; z-index:-2;
-      background:
-        radial-gradient(60% 80% at 80% 15%, rgba(0,229,255,.16), transparent 60%),
-        radial-gradient(60% 80% at 10% 90%, rgba(59,180,255,.12), transparent 60%),
-        linear-gradient(180deg, var(--bg1), var(--bg2));
-    }
-    /* طبقة صورة الخلفية — ضع ملف bg.jpg بجانب index.html */
-    .hero::after{
-      content:""; position:absolute; inset:0; z-index:-1;
-      background-image: url('bg.jpg'); /* بدّل الاسم لو صورتك مختلفة */
-      background-size:cover; background-position:center; background-repeat:no-repeat;
-      opacity:.22; filter: contrast(110%) saturate(110%);
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: url('bg.jpg') center/cover no-repeat;
+      opacity: .2;
+      z-index: -1;
     }
 
-    .card{
-      width:min(900px, 92vw); padding:40px clamp(24px, 5vw, 56px); border-radius:24px;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.22);
-      box-shadow: 0 12px 40px var(--shadow), inset 0 0 0 1px rgba(255,255,255,.04);
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 30px;
+      text-align: center;
+      flex: 1;
     }
 
-    /* خطوط زخرفية خفيفة */
-    .line{height:1px; width:100%; background:linear-gradient(90deg, transparent, rgba(255,255,255,.45), transparent); filter: drop-shadow(0 0 8px rgba(59,180,255,.55)); margin:14px 0 20px}
+    /* الهيدر */
+    .header h1 {
+      margin: 0;
+      font-size: 40px;
+      color: #3bb4ff;
+    }
+    .header p {
+      margin: 10px 0 30px;
+      font-size: 22px;
+      color: #aee9ff;
+    }
 
-    /* أيقونة يد تحكم (SVG مضمّن) */
-    .logo{display:flex; justify-content:center; margin-bottom:14px}
-    .logo svg{width:86px; height:86px; filter: drop-shadow(0 0 18px rgba(0,229,255,.35));}
+    /* الكروت */
+    .card {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 20px;
+      padding: 30px;
+      margin: 30px auto;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.45);
+      max-width: 800px; /* العرض الافتراضي للكروت */
+    }
+    /* نخلي كارت الـ Status أعرض */
+    .card.status {
+      max-width: 100%; /* ياخد عرض أكبر */
+    }
 
-    .title{margin:0; text-align:center; line-height:1}
-    .title .big{display:block; font-weight:900; font-size:clamp(42px,7vw,92px); letter-spacing:.06em; text-transform:uppercase; text-shadow:0 4px 14px rgba(0,0,0,.5), 0 0 22px rgba(59,180,255,.55)}
-    .title .big span{background:linear-gradient(90deg, #fff 0%, var(--accent) 45%, var(--accent2) 100%); -webkit-background-clip:text; background-clip:text; color:transparent}
+    .card-title {
+      margin-bottom: 15px;
+      font-size: 26px;
+      color: #00e5ff;
+    }
 
-    .phone{margin:8px 0 0; text-align:center; font-size:clamp(18px, 3.2vw, 26px); font-weight:700}
-    .phone a{color:#fff; text-decoration:none; padding:.35em .7em; border-radius:12px; border:1px solid rgba(255,255,255,.25); background:rgba(255,255,255,.08); transition:.2s transform, .2s box-shadow}
-    .phone a:hover{transform:translateY(-2px); box-shadow:0 10px 26px rgba(0,0,0,.45), 0 0 20px rgba(0,229,255,.35)}
+    /* Progress */
+    .progress-container {
+      width: 100%;
+      height: 14px;
+      background: rgba(255,255,255,.15);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-top: 14px;
+    }
+    .progress-bar {
+      width: 60%;
+      height: 100%;
+      background: linear-gradient(90deg, #3bb4ff, #00e5ff);
+      animation: progressAnim 2s infinite alternate;
+    }
+    @keyframes progressAnim {
+      from { width: 20%; }
+      to { width: 90%; }
+    }
 
-    .actions{display:flex; gap:12px; justify-content:center; margin-top:22px; flex-wrap:wrap}
-    .btn{border:none; cursor:pointer; font-weight:800; letter-spacing:.03em; padding:14px 20px; border-radius:14px; text-decoration:none; color:#00131b; background:linear-gradient(90deg, var(--accent), var(--accent2)); box-shadow:0 8px 24px rgba(0,229,255,.35); transition:.2s transform}
-    .btn:hover{transform:translateY(-2px)}
-    .btn.outline{color:#fff; background:transparent; border:1px solid rgba(255,255,255,.28); box-shadow:none}
+    /* Tabs */
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin: 24px 0;
+    }
+    .tab {
+      padding: 14px 22px;
+      border-radius: 12px;
+      background: rgba(255,255,255,.08);
+      margin: 0 8px;
+      cursor: pointer;
+      transition: .3s;
+      font-size: 18px;
+    }
+    .tab:hover {
+      background: rgba(255,255,255,.15);
+    }
+    .tab.active {
+      background: linear-gradient(90deg,#3bb4ff,#00e5ff);
+      color: #00131b;
+      font-weight: bold;
+    }
 
-    /* شرارات سحرية بسيطة */
-    .sparkle{position:absolute; inset:0; pointer-events:none}
-    .sparkle span{position:absolute; width:2px; height:2px; border-radius:50%; background:#fff; opacity:.75; box-shadow:0 0 8px 2px var(--accent2); animation:float 12s linear infinite}
-    @keyframes float{from{transform:translateY(110vh) translateX(0) scale(1)} to{transform:translateY(-10vh) translateX(40px) scale(1.6)}}
+    /* Console */
+    .tab-content {
+      background: rgba(0,0,0,.35);
+      border-radius: 14px;
+      padding: 20px;
+      text-align: left;
+      max-height: 300px;
+      overflow-y: auto;
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.18);
+    }
+    pre {
+      margin: 0;
+      color: #aee9ff;
+      font-family: monospace;
+      font-size: 18px;
+    }
 
-    /* دعم الوضع الداكن/الفاتح تلقائيًا (اختياري) */
-    @media (prefers-color-scheme: light){
-      :root{--txt:#0e131a}
-      .card{background:rgba(255,255,255,.7)}
-      .phone a{background:rgba(0,0,0,.06); color:#0e131a}
-      .btn.outline{color:#0e131a}
+    /* صندوق بيانات المتجر (في الآخر) */
+    .store-box {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 20px;
+      padding: 25px;
+      margin: 30px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.45);
+      text-align: center;
+    }
+    .store-box p {
+      margin: 0 0 16px;
+      font-size: 22px;
+      color: #aee9ff;
+    }
+    .store-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+    }
+    .store-buttons a {
+      padding: 12px 22px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+      font-size: 18px;
+    }
+    .btn-call {
+      background: linear-gradient(90deg,#3bb4ff,#00e5ff);
+      color: #00131b;
+    }
+    .btn-call:hover {
+      opacity: 0.85;
+    }
+    .btn-whatsapp {
+      background: #25D366;
+      color: #fff;
+    }
+    .btn-whatsapp:hover {
+      background: #1ebf57;
     }
   </style>
 </head>
 <body>
-  <section class="hero" aria-label="واجهة Yousef Store">
-    <div class="sparkle" id="sparkle"></div>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <h1>Yousef_Store v1.5.0</h1>
+      <p>PS4/PS5 Exploit Chain</p>
+    </div>
 
-    <div class="card">
-      <div class="logo" aria-hidden="true">
-        <!-- SVG أيقونة يد تحكم -->
-        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M8 36c0-6 4.5-10 10-10h28c5.5 0 10 4 10 10 0 5-3 10-8 10-4 0-6-2-8-4l-4-4H28l-4 4c-2 2-4 4-8 4-5 0-8-5-8-10Z" stroke="#AEE9FF" stroke-width="2"/>
-          <circle cx="45" cy="29" r="2.5" fill="#AEE9FF"/>
-          <circle cx="51" cy="29" r="2.5" fill="#AEE9FF"/>
-          <rect x="15" y="27" width="10" height="2.5" rx="1.25" fill="#AEE9FF"/>
-          <rect x="19" y="23" width="2.5" height="10" rx="1.25" fill="#AEE9FF"/>
-        </svg>
-      </div>
-
-      <h1 class="title">
-        <span class="big">YOUSEF <span>STORE</span></span>
-      </h1>
-      <div class="line" role="presentation"></div>
-
-      <p class="phone">الهاتف: <a href="tel:01555371568" aria-label="اتصال بـ Yousef Store">01555371568</a></p>
-      <div class="actions">
-        <a class="btn" href="tel:01555371568">اتصال الآن</a>
-        <a class="btn outline" href="https://wa.me/201555371568" target="_blank" rel="noopener">واتساب</a>
+    <!-- Status -->
+    <div class="card status">
+      <h2 class="card-title">Status</h2>
+      <div id="status-container">
+        <p><span id="status-text">Running exploit...</span></p>
+        <div class="progress-container">
+          <div class="progress-bar" id="progress-bar"></div>
+        </div>
       </div>
     </div>
-  </section>
 
+    <!-- Tabs -->
+    <div class="tabs">
+      <div class="tab active" data-tab="console">Console</div>
+    </div>
+
+    <!-- Console -->
+    <div class="tab-content active" id="tab-console">
+      <pre id="console"></pre>
+    </div>
+  </div>
+
+  <!-- بيانات المتجر تحت -->
+  <div class="store-box">
+    <p>📱 الهاتف: 01555371568</p>
+    <div class="store-buttons">
+      <a href="tel:01555371568" class="btn-call">📞 اتصال الآن</a>
+      <a href="https://wa.me/201555371568" target="_blank" class="btn-whatsapp">💬 واتساب</a>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/remote-logger.js"></script>
+  <script src="js/payload-manager.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="payload.js"></script>
   <script>
-    // توليد شرارات خفيفة — يعمل محليًا دون مكتبات
-    const wrap = document.getElementById('sparkle');
-    const COUNT = 40;
-    for(let i=0;i<COUNT;i++){
-      const s = document.createElement('span');
-      s.style.left = Math.random()*100 + 'vw';
-      s.style.animationDelay = (Math.random()*-12)+'s';
-      s.style.animationDuration = (10 + Math.random()*8) + 's';
-      wrap.appendChild(s);
-    }
+    document.addEventListener('DOMContentLoaded', function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const serverIp = urlParams.get('server');
+
+      const loggerConfig = { enabled: true, localConsole: true };
+
+      if (serverIp) {
+        loggerConfig.serverUrl = `http://${serverIp}:3000`;
+      }
+
+      window.RemoteLogger.init(loggerConfig);
+
+      window.RemoteLogger.info('PSFree initialized', {
+        userAgent: navigator.userAgent,
+        url: window.location.href,
+        timestamp: new Date().toISOString()
+      });
+    });
   </script>
+  <script type="module" src="./alert.mjs"></script>
 </body>
 </html>
